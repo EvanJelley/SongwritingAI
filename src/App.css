@@ -13,10 +13,10 @@ Dark-Tan: #C19875
   height: 80vh;
   max-width: 400px;
   margin: auto;
-  border: 1px solid #F2E3BC;
   border-radius: 8px;
   overflow: hidden;
   background-color: rgba(249, 249, 249, 0.8);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .chat-window {
@@ -101,8 +101,9 @@ input {
 
 /* NavBar */
 .navbar-custom {
-  width: 300px; /* Adjust width as needed */
-  margin: 20px auto; /* Centers the navbar */
-  border-radius: 10px; /* Adds rounded corners */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+  width: 300px;
+  margin: 20px auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: rgba(249, 249, 249, 0.8);
 }

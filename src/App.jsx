@@ -1,8 +1,5 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState, memo } from 'react'
 import './App.css'
-import axios from 'axios'
 import { OpenAI } from 'openai'
 
 
@@ -87,7 +84,6 @@ const Chatbot = () => {
       });
 
       // Extract the chatbot's response
-      console.log(response.choices[0].message);
       const botMessage = response.choices[0].message.content;
 
       // Add the bot's response to the chat
@@ -133,7 +129,7 @@ const Chatbot = () => {
   );
 };
 
-const IdeaBubbleBay = ({ ideadHandler }) => {
+const IdeaBubbleBay = memo(({ ideadHandler }) => {
   const ideasSpecific = [
     'What if we wrote a song about a journey to the moon?',
     'How about a song about a lost love?',
@@ -185,19 +181,17 @@ const IdeaBubbleBay = ({ ideadHandler }) => {
       <h2 className="idea-bubble-bay-title">Need some inspiration?</h2>
       <div className='row'>
         <div className='col-12 col-md-6'>
-          <ChatIdeaBubble idea={randomSpecificIdea1} ideadHandler={ideadHandler} />
-          <ChatIdeaBubble idea={randomSpecificIdea2} ideadHandler={ideadHandler} />
+          <ChatIdeaBubble idea={randomSpecificIdea1} ideadHandler={handleIdea} />
+          <ChatIdeaBubble idea={randomSpecificIdea2} ideadHandler={handleIdea} />
         </div>
         <div className='col-12 col-md-6'>
-          <ChatIdeaBubble idea={randomGeneralIdea1} ideadHandler={ideadHandler} />
-          <ChatIdeaBubble idea={randomGeneralIdea2} ideadHandler={ideadHandler} />
+          <ChatIdeaBubble idea={randomGeneralIdea1} ideadHandler={handleIdea} />
+          <ChatIdeaBubble idea={randomGeneralIdea2} ideadHandler={handleIdea} />
         </div>
       </div>
     </div>
   );
-
-
-}
+});
 
 const ChatIdeaBubble = ({ idea, ideadHandler }) => {
   return (
