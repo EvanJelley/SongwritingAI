@@ -14,7 +14,7 @@ function App() {
           <About />
         </div>
         <div className='col-12 col-md-6'>
-        <Chatbot />
+          <Chatbot />
         </div>
       </div>
     </>
@@ -35,39 +35,38 @@ const About = () => {
 };
 
 const Navbar = () => {
-    return (
-      <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-custom">
-      <div class="container d-flex justify-content-center">
-          <ul class="navbar-nav">
-              <li class="nav-item">
-                  <a class="nav-link" href="#">Home</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="#">About</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="#">Services</a>
-              </li>
-              <li class="nav-item">
-                  <a class="nav-link" href="#">Contact</a>
-              </li>
-          </ul>
+  return (
+    <nav className="navbar navbar-expand-lg navbar-light bg-light navbar-custom">
+      <div className="container d-flex justify-content-center">
+        <ul className="navbar-nav">
+          <li className="nav-item">
+            <a className="nav-link" href="#">Home</a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="#">About</a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="#">Services</a>
+          </li>
+          <li className="nav-item">
+            <a className="nav-link" href="#">Contact</a>
+          </li>
+        </ul>
       </div>
-  </nav>
-    );
-  };
+    </nav>
+  );
+};
 
 
 const Chatbot = () => {
   const openai = new OpenAI({ apiKey: import.meta.env.VITE_OPENAI_API_KEY, dangerouslyAllowBrowser: true })
   const [messages, setMessages] = useState([]);
-  const [input, setInput] = useState('');
 
-  const handleSend = async () => {
-    if (input.trim() === '') return;
+  const handleSend = async (userInput) => {
+    if (userInput.trim() === '') return;
 
     // Add the user's message to the chat
-    setMessages([...messages, { sender: 'user', text: input }]);
+    setMessages([...messages, { sender: 'user', text: userInput }]);
 
     try {
       // Call the OpenAI API
@@ -78,7 +77,7 @@ const Chatbot = () => {
           { role: "system", content: "You are here to help songwriters." },
           {
             role: "user",
-            content: input,
+            content: userInput,
           },
         ],
       });
@@ -87,14 +86,11 @@ const Chatbot = () => {
       const botMessage = response.choices[0].message.content;
 
       // Add the bot's response to the chat
-      setMessages([...messages, { sender: 'user', text: input }, { sender: 'bot', text: botMessage }]);
+      setMessages([...messages, { sender: 'user', text: userInput }, { sender: 'bot', text: botMessage }]);
     } catch (error) {
       console.error('Error fetching from OpenAI:', error);
     }
-
-    // Clear the input field
-    setInput('');
-  };
+};
 
   function cleanMessage(message) {
     let formattedMessage = message.replace(/\*\*(.*?)\*\*/g, '<i>$1</i>');
@@ -103,33 +99,46 @@ const Chatbot = () => {
   }
 
   function ideaHandler(idea) {
-    setInput(idea);
-    handleSend();
+    handleSend(idea);
   }
 
   return (
     <div className="chatbot">
       <div className="chat-window">
-        {messages.length === 0 && <IdeaBubbleBay ideadHandler={ideaHandler} />}
+        {messages.length === 0 && <IdeaBubbleBay handleIdea={ideaHandler} />}
         {messages.map((msg, index) => (
           <div key={index} className={`message ${msg.sender}`}>
             <div className='message-content' dangerouslySetInnerHTML={cleanMessage(msg.text)}></div>
           </div>
         ))}
       </div>
-      <input
-        type="text"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-        placeholder="Let's write a song together!"
-      />
-      <button className="submit-button" onClick={handleSend}>Send</button>
+      <TextBar handleSend={handleSend} />
     </div>
   );
 };
 
-const IdeaBubbleBay = memo(({ ideadHandler }) => {
+const TextBar = ({ handleSend }) => {
+  const [input, setInput] = useState('');
+  return (
+    <>
+      <input
+        type="text"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            handleSend(input);
+            setInput('');
+          }
+        }}
+        placeholder="Let's write a song together!"
+      />
+      <button className="submit-button" id="submit-button" onClick={() => { handleSend(input); setInput(''); }}>Send</button>
+    </>
+  )
+};
+
+const IdeaBubbleBay = memo(({ handleIdea }) => {
   const ideasSpecific = [
     'What if we wrote a song about a journey to the moon?',
     'How about a song about a lost love?',
