@@ -1,21 +1,26 @@
 import { useState, memo } from 'react'
 import './App.css'
 import { OpenAI } from 'openai'
+import Songwriter from './Songwriter.jsx'
+import Sidebar from './SidebarNav.jsx'
 
+
+const links = [
+  { label: 'Home', href: '/', icon: '🏠' },
+  { label: 'Profile', href: '/profile', icon: '👤' },
+  { label: 'Settings', href: '/settings', icon: '⚙️' },
+  { label: 'Logout', href: '/logout', icon: '🚪' },
+];
 
 function App() {
 
   return (
     <>
-      <img src={'./src/assets/musicBackground.png'} alt="Hiking" className='background-img' />
-      <Navbar />
+      {/* <Navbar /> */}
       <div className='row'>
-        <div className='col-12 col-md-6'>
-          <About />
-        </div>
-        <div className='col-12 col-md-6'>
+      <Sidebar links={links}/>
+          <Songwriter />
           <Chatbot />
-        </div>
       </div>
     </>
   )
@@ -90,7 +95,7 @@ const Chatbot = () => {
     } catch (error) {
       console.error('Error fetching from OpenAI:', error);
     }
-};
+  };
 
   function cleanMessage(message) {
     let formattedMessage = message.replace(/\*\*(.*?)\*\*/g, '<i>$1</i>');
@@ -105,6 +110,7 @@ const Chatbot = () => {
   return (
     <div className="chatbot">
       <div className="chat-window">
+        <img src={'./src/assets/musicBackground.png'} alt="music" className='background-img-chat' />
         {messages.length === 0 && <IdeaBubbleBay handleIdea={ideaHandler} />}
         {messages.map((msg, index) => (
           <div key={index} className={`message ${msg.sender}`}>

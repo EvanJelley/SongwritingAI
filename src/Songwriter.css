@@ -1,0 +1,88 @@
+.container {
+    padding: 16px;
+    background-color: #e2daca;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    margin-top: 30px;
+    text-align: center;
+    color: #414535;
+}
+
+.titleInput {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+    color: #414535;
+    background-color: #f0ece4;
+    border-radius: 8px;
+    padding: 10px;
+    border-width: 1px;
+    border-color: #618985;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.editorContainer {
+    margin-bottom: 20px;
+    background-color: #f0ece4;
+    border-radius: 8px;
+    padding: 10px;
+    border-width: 1px;
+    border-color: #618985;
+}
+
+.textInput {
+    width: 100%;
+    font-size: 16px;
+    line-height: 24px;
+    color: #414535;
+    border: none;
+    outline: none;
+    resize: none;
+    height: 200px;
+    box-sizing: border-box;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: space-between;
+    margin-vertical: 10px;
+}
+
+.button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+}
+
+.savedContainer {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #C19875;
+    border-radius: 8px;
+}
+
+.savedTitle {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #414535;
+}
+
+.savedLyrics {
+    font-size: 16px;
+    line-height: 24px;
+    color: #2e7d32;
+}
+
+.chordSuggestionContainer {
+    margin-top: 20px;
+}
